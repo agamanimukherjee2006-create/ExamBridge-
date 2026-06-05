@@ -1,0 +1,6 @@
+{
+  "name": "ExamBridge",
+  "description": "An AI-powered career eligibility compass and examination matrix assessing state, national, global, higher education, and private career pathways with personalized dashboards.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

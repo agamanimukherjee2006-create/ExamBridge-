@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Overriding default Tailwind violet/indigo colors to the rich ExamBridge Blue palette */
+  --color-indigo-50: #f2f7fb;
+  --color-indigo-100: #e2eef6;
+  --color-indigo-200: #cbdef0;
+  --color-indigo-300: #a7c9e5;
+  --color-indigo-400: #7badd6;
+  --color-indigo-505: #4e8fc6;
+  --color-indigo-500: #0F4C81; /* ExamBridge primary blue */
+  --color-indigo-550: #0d4270;
+  --color-indigo-600: #0F4C81; /* ExamBridge primary blue mapping */
+  --color-indigo-650: #0C3E66; /* ExamBridge secondary dark blue */
+  --color-indigo-700: #0B2E4E; /* Darkest brand shades */
+  --color-indigo-800: #081D33;
+  --color-indigo-900: #06121E;
+  --color-indigo-950: #03080F;
+
+  /* Overriding yellow/amber accents to the ExamBridge Gold palette */
+  --color-yellow-300: #FCDA6C;
+  --color-yellow-400: #FBAF17; /* ExamBridge primary gold */
+  --color-yellow-450: #FBAF17;
+  --color-amber-400: #FCDA6C;
+  --color-amber-500: #FBAF17; /* ExamBridge primary gold mapping */
+}
+
+/* Custom scrolling list styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.4);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(156, 163, 175, 0.6);
+}
