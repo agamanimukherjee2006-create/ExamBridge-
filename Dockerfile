@@ -1,5 +1,5 @@
 # Step 1: Use a lightweight Node.js environment
-FROM node:18-alpine
+FROM node:18
 
 # Step 2: Set the working directory inside the container
 WORKDIR /usr/src/app
