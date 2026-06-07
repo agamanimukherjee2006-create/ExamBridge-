@@ -17,9 +17,8 @@ if (!globalThis.crypto) {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// This tells dotenv to look exactly in the root directory for your variables
-dotenv.config({ path: path.resolve(__dirname, './.env') });
-
+// Look for a local .env file first, but don't crash or block environment variables if it isn't there
+dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
