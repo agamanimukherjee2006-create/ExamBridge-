@@ -13,6 +13,65 @@ if (!globalThis.crypto) {
         configurable: true
     });
 }
+import { GoogleGenAI } from '@google/genai';
+
+// Initialize the Google Cloud SDK natively using your secure environment token
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+
+// AI GENERATE: Leverages Google Cloud Gemini to build smart exam sheets instantly
+app.post('/api/exams/generate-ai', async (req: Request, res: Response) => {
+    try {
+        const { topic, subject } = req.body;
+
+        if (!topic) {
+            return res.status(400).json({ message: "Topic placeholder parameter is required" });
+        }
+
+        // Construct a structured prompt forcing Gemini to reply in exact schema-compliant JSON
+        const aiPrompt = `Generate a 3-question multiple choice test about the topic: "${topic}" inside the subject "${subject || 'General Engineering'}". 
+        Return the result strictly as a raw JSON object matching this structural format:
+        {
+          "title": "${topic} Automated AI Quiz",
+          "subject": "${subject || 'Computer Science'}",
+          "durationMinutes": 30,
+          "totalMarks": 30,
+          "questions": [
+            {
+              "questionText": "Sample Question Text?",
+              "options": ["Choice A", "Choice B", "Choice C", "Choice D"],
+              "correctAnswer": "Choice A"
+            }
+          ]
+        }`;
+
+        const response = await ai.models.generateContent({
+            model: 'gemini-2.5-flash',
+            contents: aiPrompt,
+        });
+
+        const rawText = response.text;
+        if (!rawText) throw new Error("Empty processing return from Google Cloud AI cluster");
+
+        // Clean any accidental markdown block wrappers if returned by the string parser
+        const cleanJsonString = rawText.replace(/```json|```/g, "").trim();
+        const parsedExamData = JSON.parse(cleanJsonString);
+
+        // Instantly save Google's generated layout straight into your cloud database
+        const newExam = new Exam(parsedExamData);
+        const savedExam = await newExam.save();
+
+        res.status(201).json({
+            message: "Exam built instantly using Google Cloud Gemini AI!",
+            data: savedExam
+        });
+
+    } catch (error: any) {
+        res.status(500).json({ 
+            message: "Google Cloud AI integration pipeline error", 
+            error: error.message 
+        });
+    }
+});
 // Recreate __dirname for ES Modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
