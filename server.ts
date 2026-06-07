@@ -19,13 +19,7 @@ import { GoogleGenAI } from '@google/genai';
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 // AI GENERATE: Leverages Google Cloud Gemini to build smart exam sheets instantly
-app.post('/api/exams/generate-ai', async (req: Request, res: Response) => {
-    try {
-        const { topic, subject } = req.body;
 
-        if (!topic) {
-            return res.status(400).json({ message: "Topic placeholder parameter is required" });
-        }
 
         // Construct a structured prompt forcing Gemini to reply in exact schema-compliant JSON
         const aiPrompt = `Generate a 3-question multiple choice test about the topic: "${topic}" inside the subject "${subject || 'General Engineering'}". 
@@ -113,6 +107,13 @@ app.post('/api/exams', async (req: Request, res: Response) => {
         res.status(400).json({ message: "Failed to create exam", error: error.message });
     }
 });
+app.post('/api/exams/generate-ai', async (req: Request, res: Response) => {
+    try {
+        const { topic, subject } = req.body;
+
+        if (!topic) {
+            return res.status(400).json({ message: "Topic placeholder parameter is required" });
+        }
 
 // 2. READ ALL: Fetch all available exams from the database
 app.get('/api/exams', async (req: Request, res: Response) => {
