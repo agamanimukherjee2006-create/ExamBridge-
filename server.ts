@@ -20,7 +20,7 @@ const __dirname = path.dirname(__filename);
 // Look for a local .env file first, but don't crash or block environment variables if it isn't there
 dotenv.config();
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 10000;
 
 app.use(express.json());
 
@@ -46,6 +46,6 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 // Start listening for requests
-app.listen(PORT, () => {
+app.listen(Number(PORT), '0.0.0.0', () => {
     console.log(`Server sprinting on port ${PORT}`);
 });
