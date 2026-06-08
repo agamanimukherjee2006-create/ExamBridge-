@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
 
 dotenv.config();
 
@@ -21,7 +22,7 @@ const examSchema = new mongoose.Schema({
 const Exam = mongoose.model('Exam', examSchema);
 
 // MongoDB Connection Setup
-const mongoURI = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/exambridge";
+const mongoURI = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/exambridge";
 mongoose.connect(mongoURI)
     .then(() => console.log("ExamBridge successfully linked to Database!"))
     .catch((err) => console.error("Database connection error:", err));
@@ -91,6 +92,13 @@ app.get('/api/exams/:id', async (req: Request, res: Response) => {
 // SERVER INITIALIZATION & RENDER PORT BINDING
 // =========================================================================
 const PORT = process.env.PORT || 10000;
+// Serve frontend static files from the build folder
+app.use(express.static(path.join(__dirname, '../dist')));
+
+// Handle any other page requests by sending back the index.html file
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../dist/index.html'));
+});
 
 app.listen(Number(PORT), '0.0.0.0', () => {
     console.log(`Server sprinting on port ${PORT}`);
