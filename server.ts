@@ -116,31 +116,42 @@ app.post('/api/exams/generate-ai', async (req: Request, res: Response) => {
         const { topic, subject } = req.body;
 
         if (!topic) {
-            return res.status(400).json({ message: "Topic placeholder parameter is required" });
+            return res.status(400).json({ message: "Topic is required" });
         }
-
-// 2. READ ALL: Fetch all available exams from the database
-app.get('/api/exams', async (req: Request, res: Response) => {
-    try {
-        const exams = await Exam.find();
-        res.status(200).json(exams);
+        return res.status(200).json({message: "AI Exam generation route placeholder"});
     } catch (error: any) {
-        res.status(500).json({ message: "Failed to fetch exams", error: error.message });
+        console.error(error);
+        return res.status(500).json({ message: "Failed to generate AI exam", error: error.message});
     }
 });
 
-// 3. READ ONE: Fetch the exact details of a single exam by its unique MongoDB ID
+// 2. READ ALL: Fetch all available exams from the database
+// --- REPLACE LINES 129 TO 148 WITH THIS CLEAN CODE ---
+
+app.get('/api/exams', async (req: Request, res: Response) => {
+    try {
+        const exams = await Exam.find();
+        return res.status(200).json(exams);
+    } catch (error: any) {
+        console.error(error);
+        return res.status(500).json({ message: "Failed to fetch exams" });
+    }
+}); // <-- Closed cleanly with });
+
+// 3. READ ONE: Fetch the exact details of a single exam by its id
 app.get('/api/exams/:id', async (req: Request, res: Response) => {
     try {
         const exam = await Exam.findById(req.params.id);
         if (!exam) {
             return res.status(404).json({ message: "Exam profile not found" });
         }
-        res.status(200).json(exam);
+        return res.status(200).json(exam);
     } catch (error: any) {
-        res.status(500).json({ message: "Error retrieving exam data", error: error.message });
+        console.error(error);
+        return res.status(500).json({ message: "Error retrieving exam data" });
     }
-});
+}); // <-- Closed cleanly with });
+
 
 // Start listening for requests
 app.listen(Number(PORT), '0.0.0.0', () => {
