@@ -97,11 +97,11 @@ app.get('/api/exams/:id', async (req: Request, res: Response) => {
 // =========================================================================
 const PORT = process.env.PORT || 10000;
 // Serve frontend static files from the build folder
-app.use(express.static(path.join(__dirname, '../dist')));
+app.use(express.static(path.join(__dirname, 'dist')));
 
 // Handle any other page requests by sending back the index.html file
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../dist/index.html'));
+    res.sendFile(path.join(__dirname, '/dist/index.html'));
 });
 
 app.listen(Number(PORT), '0.0.0.0', () => {
