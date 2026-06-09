@@ -7,7 +7,7 @@
   "dev": "vite",
   "build": "tsc && vite build",
   "preview": "vite preview",
-  "start": "node dist/server.js"
+  "start": "vite build && tsx server.ts"
 },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
